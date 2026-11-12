@@ -1,0 +1,44 @@
+name: GlowSpace Project Test
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Check website files
+        run: |
+          test -f index.html
+          test -f style.css
+          test -f script.js
+          echo "All files exist!"
+
+      - name: Check website title
+        run: |
+          grep -q "GlowSpace" index.html
+          echo "Website title is correct!"
+
+      - name: Check button functionality
+        run: |
+          grep -q "bookingButton" index.html
+          grep -q "bookingButton" script.js
+          echo "Booking button found!"
+
+      - name: Check style connection
+        run: |
+          grep -q "style.css" index.html
+          echo "CSS connection is correct!"
+
+      - name: Finish testing
+        run: echo "GlowSpace project successfully tested!"
